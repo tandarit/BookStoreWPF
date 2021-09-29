@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="BookStore.Views.BookListUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BookStore.Views" 
+             xmlns:data = "clr-namespace:BookStore.Models" 
+             xmlns:viewmodel="clr-namespace:BookStore.ViewModels"              
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="480">
+    <!--
+            xmlns:vml = "clr-namespace:BookStore.ViewModelLocator" 
+            vml:ViewModelLocator.AutoHookedUpViewModel = "True"
+   
+    <UserControl.DataContext>
+        <viewmodel:BookListViewModel />
+    </UserControl.DataContext>
+ -->
+    <UserControl.Resources>
+        <DataTemplate DataType = "{x:Type data:Book}">
+            <Border CornerRadius="5" Background="Aquamarine" BorderThickness="1" BorderBrush="Gainsboro" Width="400" >
+                <StackPanel Orientation = "Horizontal" >
+                    <TextBlock Text = "{Binding Path = BookName, Mode = TwoWay}" Width = "100" Margin = "5 5 5 5"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <ScrollViewer CanContentScroll="True">
+        <ListView x:Name="lwBook" ItemsSource = "{Binding Books}" SelectedItem = "{Binding SelectedBook}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">                    
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Gold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </ScrollViewer>
+</UserControl>
