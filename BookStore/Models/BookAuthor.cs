@@ -4,18 +4,12 @@
 
 namespace BookStore.Models
 {
-    public partial class BookAuthor : INotifyPropertyChanged
+    public partial class BookAuthor 
     {
-        private int _BookAuthorId;
-
         public int BookAuthorId
         { 
-            get => _BookAuthorId; 
-            set
-            {
-                _BookAuthorId = value;
-                RaisePropertyChanged(nameof(BookAuthorId));
-            } 
+            get; 
+            set;
         }
         public int BookId { get; set; }
         public int AuthorId { get; set; }
@@ -23,14 +17,6 @@ namespace BookStore.Models
         public virtual Author Author { get; set; }
         public virtual Book Book { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
+        
     }
 }

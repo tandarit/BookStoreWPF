@@ -6,64 +6,34 @@ using System.ComponentModel;
 
 namespace BookStore.Models
 {
-    public partial class Author : INotifyPropertyChanged
+    public partial class Author
     {
-        private int _AuthorId;
-        private string _AuthorFirstName;
-        private string _AuthorLastName;
-        private string _Description;
-
         public Author()
         {
             BookAuthors = new HashSet<BookAuthor>();
         }
 
-        public int AuthorId 
+        public int AuthorId
         {
-            get => _AuthorId;
-            set {
-                _AuthorId = value;
-                RaisePropertyChanged(nameof(AuthorId));
-            }
+            get;
+            set;
         }
-        public string AuthorFirstName 
-        { 
-            get => _AuthorFirstName;
-            set
-            {
-                _AuthorFirstName = value;
-                RaisePropertyChanged(nameof(AuthorFirstName));
-            }
+        public string AuthorFirstName
+        {
+            get;
+            set;
         }
         public string Description
         {
-            get => _Description;
-            set
-            {
-                _Description = value;
-                RaisePropertyChanged(nameof(Description));
-            }
+            get;
+            set;
         }
         public string AuthorLastName
         {
-            get => _AuthorLastName;
-            set
-            {
-                _AuthorLastName = value;
-                RaisePropertyChanged(nameof(AuthorLastName));
-            }
+            get; set;
         }
 
         public virtual ICollection<BookAuthor> BookAuthors { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
+        
     }
 }

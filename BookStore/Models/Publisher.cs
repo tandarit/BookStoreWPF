@@ -6,11 +6,8 @@ using System.ComponentModel;
 
 namespace BookStore.Models
 {
-    public partial class Publisher : INotifyPropertyChanged
+    public partial class Publisher
     {
-        private int _PublisherId;
-        private string _PublisherName;
-
         public Publisher()
         {
             Books = new HashSet<Book>();
@@ -18,33 +15,17 @@ namespace BookStore.Models
 
         public int PublisherId
         {
-            get => _PublisherId;
-            set
-            {
-                _PublisherId = value;
-                RaisePropertyChanged(nameof(PublisherId));
-            }
+            get;
+            set;
+           
         }
         public string PublisherName 
         { 
-            get=>_PublisherName; 
-            set
-            {
-                _PublisherName = value;
-                RaisePropertyChanged(nameof(PublisherName));
-            }
+            get; 
+            set;
+         
         }
 
-        public virtual ICollection<Book> Books { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
+        public virtual ICollection<Book> Books { get; set; }      
     }
 }

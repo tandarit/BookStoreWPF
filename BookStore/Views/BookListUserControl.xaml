@@ -7,36 +7,35 @@
              xmlns:data = "clr-namespace:BookStore.Models" 
              xmlns:viewmodel="clr-namespace:BookStore.ViewModels"              
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="480">
-    <!--
-            xmlns:vml = "clr-namespace:BookStore.ViewModelLocator" 
-            vml:ViewModelLocator.AutoHookedUpViewModel = "True"
+             d:DesignHeight="700" d:DesignWidth="480">
    
-    <UserControl.DataContext>
-        <viewmodel:BookListViewModel />
-    </UserControl.DataContext>
- -->
     <UserControl.Resources>
-        <DataTemplate DataType = "{x:Type data:Book}">
-            <Border CornerRadius="5" Background="Aquamarine" BorderThickness="1" BorderBrush="Gainsboro" Width="400" >
-                <StackPanel Orientation = "Horizontal" >
-                    <TextBlock Text = "{Binding Path = BookName, Mode = TwoWay}" Width = "100" Margin = "5 5 5 5"/>
+        <DataTemplate DataType = "{x:Type data:BookPresenterModel}">
+            <Border CornerRadius="5" Background="Aquamarine" BorderThickness="1" BorderBrush="Gainsboro" Width="380" >
+                <StackPanel Orientation = "Horizontal" >                    
+                    <TextBlock Text = "{Binding Path = BookName}" Margin = "5 5 5 5"/>
                 </StackPanel>
             </Border>
         </DataTemplate>
     </UserControl.Resources>
-
-    <ScrollViewer CanContentScroll="True">
-        <ListView x:Name="lwBook" ItemsSource = "{Binding Books}" SelectedItem = "{Binding SelectedBook}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">                    
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="Gold" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
-    </ScrollViewer>
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <Button Content = "Add" Command = "{Binding AddCommand}" Width = "75" Margin="5 5 5 5" />
+            <Button Content = "Delete" Command = "{Binding DeleteCommand}" Width = "75" Margin="5 5 5 5" />
+            <Button Content = "Save" Command = "{Binding SaveCommand}" Width = "75" Margin="5 5 5 5" />
+        </StackPanel>
+        <ScrollViewer CanContentScroll="True" Height="600">
+            <ListView x:Name="lwBook" ItemsSource = "{Binding Books, Mode=TwoWay}" SelectedItem = "{Binding SelectedBook, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Gold" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </ScrollViewer>
+    </StackPanel>
 </UserControl>

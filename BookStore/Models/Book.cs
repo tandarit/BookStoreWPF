@@ -6,14 +6,8 @@ using System.ComponentModel;
 
 namespace BookStore.Models
 {
-    public partial class Book : INotifyPropertyChanged
-    {
-        private int _BookId;
-        private string _BookName;
-        private string _Description;
-        private int? _PublisherId;
-        private string _PictureUrl;
-        private int _Price;
+    public partial class Book 
+    {      
 
         public Book()
         {
@@ -24,73 +18,48 @@ namespace BookStore.Models
 
         public int BookId
         {
-            get => _BookId;
-            set
-            {
-                _BookId = value;
-                RaisePropertyChanged(nameof(BookId));
-            }
+            get;
+            set;
+            
         }
         public string BookName
         {
-            get => _BookName;
-            set
-            {
-                _BookName = value;
-                RaisePropertyChanged(nameof(BookName));
-            }
+            get;
+            set;
+          
         }
         public string Description
         {
-            get => _Description;
-            set
-            {
-                _Description = value;
-                RaisePropertyChanged(nameof(Description));
-            }
+            get;
+            set;
         }
         public int? PublisherId
         {
-            get => _PublisherId;
-            set
-            {
-                _PublisherId = value;
-                RaisePropertyChanged(nameof(PublisherId));
-            }
+            get;
+            set;
         }
 
         public string PictureUrl
         {
-            get => _PictureUrl;
-            set
-            {
-                _PictureUrl = value;
-                RaisePropertyChanged(nameof(PictureUrl));
-            }
+            get;
+            set;
         }
         public int Price
         {
-            get => _Price;
-            set
-            {
-                _Price = value;
-                RaisePropertyChanged(nameof(Price));
-            }
+            get;
+            set;
         }
 
 
-        public virtual Publisher Publisher { get; set; }
+        public Publisher Publisher
+        {
+            get;
+            set;
+          
+        }
         public virtual ICollection<BookAuthor> BookAuthors { get; set; }
         public virtual ICollection<BookCategory> BookCategories { get; set; }
         public virtual ICollection<BookFormat> BookFormats { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
     }
 }

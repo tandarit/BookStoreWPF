@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BookStore.Views
 {
     /// <summary>
-    /// Interaction logic for BookListUserControl.xaml
+    /// Interaction logic for CategoryWindow.xaml
     /// </summary>
-    public partial class BookListUserControl : UserControl
+    public partial class CategoryWindow : Window
     {
-        public BookListUserControl()
+        public CategoryWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

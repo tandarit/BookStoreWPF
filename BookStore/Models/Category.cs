@@ -6,10 +6,8 @@ using System.ComponentModel;
 
 namespace BookStore.Models
 {
-    public partial class Category : INotifyPropertyChanged
-    {
-        private int _CategoryId;
-        private string _CategoryName;
+    public partial class Category
+    {  
 
         public Category()
         {
@@ -18,33 +16,16 @@ namespace BookStore.Models
 
         public int CategoryId
         {
-            get => _CategoryId;
-            set
-            {
-                _CategoryId = value;
-                RaisePropertyChanged(nameof(CategoryId));
-            }
+            get;
+            set;
         }
         public string CategoryName
         {
-            get => _CategoryName;
-            set
-            {
-                _CategoryName = value;
-                RaisePropertyChanged(nameof(CategoryName));
-            }
+            get;
+            set;
         }
 
         public virtual ICollection<BookCategory> BookCategories { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
     }
 }

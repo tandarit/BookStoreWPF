@@ -3,10 +3,85 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BookStore.Views"
+             xmlns:local="clr-namespace:BookStore.Views" 
+             xmlns:data = "clr-namespace:BookStore.Models" 
+             xmlns:viewmodel="clr-namespace:BookStore.ViewModels"
+             xmlns:converter="clr-namespace:BookStore.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="768" d:DesignWidth="780">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <TextBlock Text="Book picture:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
+            <Border BorderThickness="2" CornerRadius="5" BorderBrush="DarkMagenta">
+                <Image Source="{Binding Path=SelectedBook.PictureUrl, Mode=TwoWay}" Width="260" Height="320" Margin="5 5 5 5" />
+            </Border>
+            <TextBox x:Name="tbPictureUrl" Margin="5 5 5 5" Width="250" Text="{Binding SelectedBook.PictureUrl, Mode=TwoWay}" />
+        </StackPanel>
+        <ScrollViewer Grid.Column="1">
+            <StackPanel  Orientation="Vertical" Margin="5 5 5 5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Deatils of book" FontFamily="Arial" FontSize="35" Margin="5 5 5 5"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
+                    <TextBlock Text="Book name:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
+                    <TextBox Text="{Binding Path=SelectedBook.BookName, Mode=TwoWay, FallbackValue='Háború és béke'}" Width="250" Margin="5 5 5 5" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
+                    <TextBlock Text="Description:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
+                    <TextBox Text="{Binding Path=SelectedBook.Description, Mode=TwoWay, FallbackValue='Háború és béke leírása'}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Width="350" Height="300" Margin="5 5 5 5" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
+                    <TextBlock Text="Publisher:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
+                    <TextBox Text="{Binding Path=SelectedBook.Publisher.PublisherName, Mode=TwoWay, FallbackValue='Lev Nyikolajevics Tolsztoj'}" Width="250" Margin="5 5 5 5" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
+                    <TextBlock Text="Price:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
+                    <TextBox Text="{Binding Path=SelectedBook.Price, Mode=TwoWay, FallbackValue=5000}" Width="250" Margin="5 5 5 5" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
+                    <TextBlock Text="Categories:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
+                    <DataGrid x:Name="dgCategories" Width="370" ItemsSource="{Binding Path=SelectedBook.BookCategories, Mode=TwoWay}" AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="370" Header="Name"  Binding="{Binding CategoryName, Mode=TwoWay}"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
+                    <TextBlock Text="Authors:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
+                    <DataGrid x:Name="dgAuthors" Width="370" ItemsSource="{Binding Path=SelectedBook.BookAuthors, Mode=TwoWay}" AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="170" Header="FirstName"  Binding="{Binding AuthorFirstName, Mode=TwoWay}"/>
+                            <DataGridTextColumn Width="170" Header="LastName"  Binding="{Binding AuthorLastName, Mode=TwoWay}"/>
+
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <TextBox Width="350" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Description, Mode=TwoWay}" />
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
+                    <TextBlock Text="Formats:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
+                    <DataGrid x:Name="dgFormats" Width="370" ItemsSource="{Binding Path=SelectedBook.BookFormats, Mode=TwoWay}" AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="370" Header="Name"  Binding="{Binding FormatName, Mode=TwoWay}"/>
+
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <TextBox Width="350" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Description, Mode=TwoWay}" />
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

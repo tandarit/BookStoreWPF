@@ -6,12 +6,8 @@ using System.ComponentModel;
 
 namespace BookStore.Models
 {
-    public partial class Format : INotifyPropertyChanged
+    public partial class Format
     {
-        private int _FormatId;
-        private string _FormatName;
-        private string _Description;
-
         public Format()
         {
             BookFormats = new HashSet<BookFormat>();
@@ -19,41 +15,23 @@ namespace BookStore.Models
 
         public int FormatId
         {
-            get => _FormatId;
-            set
-            {
-                _FormatId = value;
-                RaisePropertyChanged(nameof(FormatId));
-            }
+            get;
+            set;
         }
         public string FormatName
         {
-            get => _FormatName;
-            set
-            {
-                _FormatName = value;
-                RaisePropertyChanged(nameof(FormatName));
-            }
+            get;
+            set;
+           
         }
         public string Description
         {
-            get=>_Description;
-            set
-            {
-                _Description = value;
-                RaisePropertyChanged(nameof(Description));
-            }
+            get;
+            set;
+        
         }
 
         public virtual ICollection<BookFormat> BookFormats { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
+       
     }
 }

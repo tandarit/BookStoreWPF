@@ -8,12 +8,15 @@ namespace BookStore
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly BookStoreDBContext _bookStoreDBContext;
-
-        public MainWindow(BookStoreDBContext bookStoreDBContext)
+        private readonly BookListViewModel _bookListViewModel;
+        
+        public MainWindow(BookListViewModel bookListViewModel)
         {
-            _bookStoreDBContext = bookStoreDBContext;
+            _bookListViewModel = bookListViewModel;
+            DataContext = _bookListViewModel;
+           
             InitializeComponent();
+            
         }
 
     }

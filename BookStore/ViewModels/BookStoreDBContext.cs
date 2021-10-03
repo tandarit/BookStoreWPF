@@ -81,10 +81,10 @@ namespace BookStore.ViewModels
 
             modelBuilder.Entity<BookCategory>(entity =>
             {
-                entity.HasKey(e => e.BookCategory1)
+                entity.HasKey(e => e.BookCategoryId)
                     .HasName("PK__BookCate__BB9E06924C15C81D");
 
-                entity.Property(e => e.BookCategory1).HasColumnName("BookCategory");
+                entity.Property(e => e.BookCategoryId).HasColumnName("BookCategoryId");
 
                 entity.HasOne(d => d.Book)
                     .WithMany(p => p.BookCategories)
