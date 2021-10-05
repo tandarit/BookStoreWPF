@@ -1,32 +1,39 @@
-﻿using BookStore.Models;
+﻿using BookStore.Commands;
+using BookStore.Models;
+using BookStore.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace BookStore.ViewModels
 {
-    public class BookListViewModel
+    public class BookListViewModel : ViewModelBase
     {
         private readonly BookStoreDBContext _databaseContext;
+        private readonly IItemService _bookStoreItemService;
         private BookPresenterModel _selectedBook;
         private ObservableCollection<BookPresenterModel> _books;
 
-        public MyICommand DeleteCommand { get; set; }
+        //public MyICommand DeleteCommand { get; set; }
+        public AsyncCommandBase DeleteCommand { get; set; }
         public MyICommand AddCommand { get; set; }
-        public MyICommand SaveCommand { get; set; }
+        public AsyncCommandBase SaveCommand { get; set; }
 
-        public BookListViewModel(BookStoreDBContext databaseContext)
+        public BookListViewModel(BookStoreDBContext databaseContext, IItemService bookStoreItemService)
         {
             _databaseContext = databaseContext;
+            _bookStoreItemService = bookStoreItemService;
 
             //fill up at startup
             _books = FillBookList();
 
-            DeleteCommand = new MyICommand(OnDelete, CanDelete);
+            //DeleteCommand = new MyICommand(OnDelete, CanDelete);
+            DeleteCommand = new DeleteCommand(this, _bookStoreItemService);
             AddCommand = new MyICommand(OnAdd, CanAdd);
-            SaveCommand = new MyICommand(OnSave, CanSave);
+            SaveCommand = new SaveCommand(this, _bookStoreItemService);
         }
 
         public BookPresenterModel SelectedBook
@@ -39,6 +46,7 @@ namespace BookStore.ViewModels
             set
             {
                 _selectedBook = value;
+                OnPropertyChanged(nameof(SelectedBook));
                 DeleteCommand.RaiseCanExecuteChanged();
             }
         }
@@ -52,48 +60,20 @@ namespace BookStore.ViewModels
             set
             {
                 _books = value;
+                OnPropertyChanged(nameof(Books));
             }
         }
 
         private void OnAdd()
         {
-            AddNewBook();
+            Books.Add(new BookPresenterModel());
+            //AddNewBook();
         }
 
         private bool CanAdd()
         {
             return true;
-        }
-
-        private void OnDelete()
-        {
-            var id = SelectedBook.BookId;
-            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Delete Confirmation", MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
-                Books.Remove(SelectedBook);
-                DeleteTransaction(id);
-            }
-        }
-
-        private bool CanDelete()
-        {
-            return SelectedBook != null;
-        }
-
-        private void OnSave()
-        {
-            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Save Confirmation", MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
-                //ToDo
-            }
-        }
-
-        private bool CanSave()
-        {
-            return true;
-        }
+        }        
 
         private ObservableCollection<BookPresenterModel> FillBookList()
         {
@@ -129,7 +109,7 @@ namespace BookStore.ViewModels
                                                {
                                                    PublisherId = publisher.PublisherId,
                                                    PublisherName = publisher.PublisherName
-                                               }).First(),
+                                               }).First().PublisherName,
                                   PictureUrl = book.PictureUrl,
                                   Description = book.Description,
                                   Price = book.Price,
@@ -265,14 +245,17 @@ namespace BookStore.ViewModels
                     book.PictureUrl = SelectedBook.PictureUrl;
                     book.Price = SelectedBook.Price;
 
-                    var publisher = _databaseContext.Publishers.Where<Publisher>(p => p.PublisherName.Equals(SelectedBook.Publisher.PublisherName));
+                    var publisher = _databaseContext.Publishers.Where<Publisher>(p => p.PublisherName.Equals(SelectedBook.Publisher));
                     if (publisher != null)
                     {
                         book.Publisher = publisher.FirstOrDefault<Publisher>();
                     }
                     else
                     {
-                        book.Publisher = SelectedBook.Publisher;
+                        book.Publisher = new Publisher()
+                        {
+                            PublisherName = SelectedBook.Publisher
+                        };
                     }
 
                     _databaseContext.Books.Add(book);
@@ -287,7 +270,7 @@ namespace BookStore.ViewModels
                         Description = book.Description,
                         PictureUrl = book.PictureUrl,
                         Price = book.Price,
-                        Publisher = book.Publisher,
+                        Publisher = book.Publisher.PublisherName,
                         BookAuthors = SelectedBook.BookAuthors,
                         BookCategories = SelectedBook.BookCategories,
                         BookFormats = SelectedBook.BookFormats

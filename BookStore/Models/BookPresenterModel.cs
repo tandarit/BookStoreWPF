@@ -10,7 +10,7 @@ namespace BookStore.Models
         private string _Description;
         private string _PictureUrl;
         private int _Price;
-        private Publisher _Publisher;
+        private string _Publisher;
 
         public BookPresenterModel()
         {
@@ -64,7 +64,7 @@ namespace BookStore.Models
                 RaisePropertyChanged(nameof(Price));
             }
         }
-        public Publisher Publisher
+        public string Publisher
         {
             get => _Publisher;
             set

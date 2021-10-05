@@ -37,7 +37,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
                     <TextBlock Text="Publisher:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
-                    <TextBox Text="{Binding Path=SelectedBook.Publisher.PublisherName, Mode=TwoWay, FallbackValue='Lev Nyikolajevics Tolsztoj'}" Width="250" Margin="5 5 5 5" />
+                    <TextBox Text="{Binding Path=SelectedBook.Publisher, Mode=TwoWay, FallbackValue='Libri Kiadó'}" Width="250" Margin="5 5 5 5" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
                     <TextBlock Text="Price:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
@@ -54,10 +54,10 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5 5 5 5">
                     <TextBlock Text="Authors:" FontFamily="Arial" FontSize="18" Margin="5 5 5 5"/>
-                    <DataGrid x:Name="dgAuthors" Width="370" ItemsSource="{Binding Path=SelectedBook.BookAuthors, Mode=TwoWay}" AutoGenerateColumns="False" >
+                    <DataGrid CanUserAddRows="True" x:Name="dgAuthors" Width="370" ItemsSource="{Binding Path=SelectedBook.BookAuthors, Mode=TwoWay}" AutoGenerateColumns="False" >
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="170" Header="FirstName"  Binding="{Binding AuthorFirstName, Mode=TwoWay}"/>
-                            <DataGridTextColumn Width="170" Header="LastName"  Binding="{Binding AuthorLastName, Mode=TwoWay}"/>
+                            <DataGridTextColumn Width="170" Header="FirstName"  Binding="{Binding AuthorFirstName}"/>
+                            <DataGridTextColumn Width="170" Header="LastName"  Binding="{Binding AuthorLastName}"/>
 
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
